@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head><title>Vuln Lab</title></head>
+<body>
+  <h1>🧪 Vulnerable Lab</h1>
+
+  <h2>Login</h2>
+  <form method="POST" action="/login">
+    <input name="username" placeholder="username">
+    <input name="password" placeholder="password">
+    <button>Login</button>
+  </form>
+  {% if msg %}<p><b>{{ msg }}</b></p>{% endif %}
+
+  <h2>Search</h2>
+  <form method="GET" action="/search">
+    <input name="q" placeholder="search...">
+    <button>Go</button>
+  </form>
+  {% if search %}
+    <!-- ❌ |safe disables escaping → XSS -->
+    <p>You searched for: {{ search | safe }}</p>
+  {% endif %}
+
+  <h2>Notes API</h2>
+  <p>Try: <code>/note/1</code>, <code>/note/2</code>, <code>/note/3</code></p>
+</body>
+</html>

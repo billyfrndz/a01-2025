@@ -1,0 +1,14 @@
+services:
+  vuln-lab:
+    build: .
+    container_name: vuln-lab
+    ports:
+      - "127.0.0.1:5000:5000"    # 🔒 localhost only
+    volumes:
+      - ./app.py:/app/app.py
+      - ./templates:/app/templates
+      - lab-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  lab-data:
