@@ -69,3 +69,13 @@ if __name__ == '__main__':
     if not os.path.exists(DB):
         os.makedirs('/app/data', exist_ok=True)
     app.run(host='0.0.0.0', port=5000, debug=True)
+
+# ---------- SECURE #3: IDOR (Broken Access Control) ----------
+@app.route('/invoice/<int:invoice_id>')
+@login_required
+def get_invoice(invoice_id):
+    invoice = Invoice.query.filter_by(
+        id=invoice_id,
+        user_id=current_user.id     # enforce ownership
+    ).first_or_404()
+    return jsonify(invoice.to_dict())
